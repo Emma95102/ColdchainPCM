@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 export default function PCMStatus() {
-  // 檢查 localStorage 是否有儲存冷能百分比，如果有就使用儲存的值，沒有就設為預設的 75
-  const storedCoolingPercent = localStorage.getItem('coolingPercent');
-  const [coolingPercent, setCoolingPercent] = useState(storedCoolingPercent ? parseFloat(storedCoolingPercent) : 75);
+  // 模擬冷能剩餘百分比（初始為 75%）
+  const [coolingPercent, setCoolingPercent] = useState(75);
 
+  // 預冷完成時間（倒數秒數）
   const [preCoolingSeconds, setPreCoolingSeconds] = useState(300); // 5分鐘
+
+  // 保溫效期倒數（秒）
   const [keepWarmSeconds, setKeepWarmSeconds] = useState(7200); // 2小時
+
+  // 模組使用狀態
   const [moduleStatus, setModuleStatus] = useState('正常');
 
-  // 當 coolingPercent 改變時，儲存到 localStorage
   useEffect(() => {
-    localStorage.setItem('coolingPercent', coolingPercent.toString());
-
     const interval = setInterval(() => {
       setPreCoolingSeconds(prev => Math.max(prev - 1, 0));
       setKeepWarmSeconds(prev => Math.max(prev - 1, 0));
@@ -86,5 +87,5 @@ const pageStyle = {
   padding: 20,
   backgroundColor: '#f7f9fc',
   borderRadius: 8,
-  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+  boxShadow: '0 0 10px rgba(0,0,0,0.1)'
 };
